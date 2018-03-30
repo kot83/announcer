@@ -18,7 +18,7 @@ class Bot(commands.AutoShardedBot):
 
     async def on_ready(self):
         print('Logged on as {0} (ID: {0.id})'.format(self.user))
-
+        await bot.change_presence(activity=discord.Activity(name='with announcements| a-help', type=1))
 
 bot = Bot()
 
@@ -57,10 +57,10 @@ async def clean_up(ctx):
     '''
     webhooks = [await channel.webhooks() for channel in ctx.guild.text_channels]
     filterwebhook = [webhook.name=='Announcer' for webhook in webhooks[0]]
-    for index, value in enumerate(webhooks):
-        if filterwebhook[index] == True:
-            await value[0].delete()
-    await ctx.send('Cleaned up')
+    if filterwebhook:
+        for index, value in enumerate(webhooks):
+            if filterwebhook[index] == True:
+                await value[0].delete()
     await ctx.guild.leave()
 
 bot.run(config.token)
