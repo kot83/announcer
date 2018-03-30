@@ -26,3 +26,5 @@ var/
 
 # Our configuration files
 config.py
+
+env/
